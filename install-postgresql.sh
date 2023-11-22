@@ -61,7 +61,7 @@ systemctl mask firewalld
 
 systemctl start nftables
 systemctl enable nftables
-mkdir /etc/nftables/firewall.nft
+touch /etc/nftables/firewall.nft
 cat << EOF > /etc/nftables/firewall.nft
 	#!/usr/sbin/nft -f
 
@@ -97,3 +97,5 @@ EOF
 
 sed -i 's/\/etc\/nftables\/main.nft/\/etc\/nftables\/firewall.nft/g' /etc/sysconfig/nftables.conf
 sed -i 's/#include/include/g' /etc/sysconfig/nftables.conf
+
+systemctl restart nftables
