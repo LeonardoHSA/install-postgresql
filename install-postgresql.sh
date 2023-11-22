@@ -63,36 +63,36 @@ systemctl start nftables
 systemctl enable nftables
 touch /etc/nftables/firewall.nft
 cat << EOF > /etc/nftables/firewall.nft
-	#!/usr/sbin/nft -f
+#!/usr/sbin/nft -f
 
-	# Flush the rule set
-	flush ruleset
+# Flush the rule set
+flush ruleset
 
-	table ip filter {
-        	chain INPUT {
-                	type filter hook input priority filter; policy accept;
-                	iifname "lo" counter packets 0 bytes 0 accept
-                	ip saddr 127.0.0.0/8 counter packets 0 bytes 0 accept
-                	ct state established,related counter packets 0 bytes 0 accept
-                	tcp dport 5432 counter packets 0 bytes 0 drop
-                	tcp dport 5672 counter packets 0 bytes 0 drop
-                	tcp dport 15672 counter packets 0 bytes 0 drop
-                	tcp dport 9009 counter packets 0 bytes 0 accept
-                	tcp dport 81 counter packets 0 bytes 0 accept
-                	ip saddr 10.0.0.0/8 counter packets 0 bytes 0 accept
-                	ip saddr 172.16.0.0/12 counter packets 0 bytes 0 accept
-                	ip saddr 192.168.0.0/16 counter packets 0 bytes 0 accept
-                	ip saddr 100.64.0.0/10 counter packets 0 bytes 0 accept
-                	ip saddr 169.254.0.0/16 counter packets 0 bytes 0 accept
-                	ip daddr 224.0.0.0/24 counter packets 0 bytes 0 accept
-                	ip daddr 255.255.255.255 counter packets 0 bytes 0 accept
-                	ip saddr 177.144.137.20 counter packets 0 bytes 0 accept
-                	ip saddr 191.8.182.77 counter packets 0 bytes 0 accept
-                	ip saddr 187.87.247.60 counter packets 0 bytes 0 accept
-                	ip saddr 191.252.204.126 counter packets 0 bytes 0 accept
-                	counter packets 0 bytes 0 drop
-        	}
-	}
+table ip filter {
+        chain INPUT {
+                type filter hook input priority filter; policy accept;
+                iifname "lo" counter packets 0 bytes 0 accept
+                ip saddr 127.0.0.0/8 counter packets 0 bytes 0 accept
+                ct state established,related counter packets 0 bytes 0 accept
+                tcp dport 5432 counter packets 0 bytes 0 accept
+                tcp dport 5672 counter packets 0 bytes 0 drop
+                tcp dport 15672 counter packets 0 bytes 0 drop
+                tcp dport 9009 counter packets 0 bytes 0 accept
+                tcp dport 81 counter packets 0 bytes 0 accept
+                ip saddr 10.0.0.0/8 counter packets 0 bytes 0 accept
+                ip saddr 172.16.0.0/12 counter packets 0 bytes 0 accept
+                ip saddr 192.168.0.0/16 counter packets 0 bytes 0 accept
+                ip saddr 100.64.0.0/10 counter packets 0 bytes 0 accept
+                ip saddr 169.254.0.0/16 counter packets 0 bytes 0 accept
+                ip daddr 224.0.0.0/24 counter packets 0 bytes 0 accept
+                ip daddr 255.255.255.255 counter packets 0 bytes 0 accept
+                ip saddr 177.144.137.20 counter packets 0 bytes 0 accept
+                ip saddr 191.8.182.77 counter packets 0 bytes 0 accept
+                ip saddr 187.87.247.60 counter packets 0 bytes 0 accept
+                ip saddr 191.252.204.126 counter packets 0 bytes 0 accept
+                counter packets 0 bytes 0 drop
+        }
+}
 EOF
 
 sed -i 's/\/etc\/nftables\/main.nft/\/etc\/nftables\/firewall.nft/g' /etc/sysconfig/nftables.conf
