@@ -8,7 +8,6 @@ echo ""
 echo "### Verificando versões do postgresql ###"
 yum module list postgresql
 echo "---------------------------"
-echo "                        Pronto!!!                       "
 echo ""
 echo ""
 echo -n "Por favor, selecione a versão a ser instalada: "
